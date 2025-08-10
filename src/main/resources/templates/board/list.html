@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title th:text="${home.blogTitle}">블로그</title>
+    <title>블로그</title>
     <!-- CSS 경로를 Thymeleaf 방식으로 변경 -->
     <link rel="stylesheet" th:href="@{/css/blog.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -10,7 +10,7 @@
 <body>
 <header class="gnb">
     <div class="gnb__inner">
-        <div class="logo" th:text="${home.blogTitle}">블로그</div>
+        <div class="logo">블로그</div>
         <nav class="menu">
             <a href="/">블로그 홈</a>
             <a href="/post/new">글쓰기</a>
