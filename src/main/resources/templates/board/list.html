@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>블로그</title>
+    <title th:text="${home.title}">블로그</title>
     <!-- CSS 경로를 Thymeleaf 방식으로 변경 -->
     <link rel="stylesheet" th:href="@{/css/blog.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -23,36 +23,28 @@
     <aside class="sidebar">
         <section class="profile card">
             <div class="avatar"></div>
-            <div class="nick" th:text="${home.blogTitle}">사용자</div>
-            <div class="today" th:text="'Today · ' + ${home.today}">Today · 2025-08-09</div>
+            <div class="nick" th:text="${home.title}">사용자</div>
+            <div class="today" th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">Today · 2025-08-09</div>
         </section>
 
         <section class="category card">
             <h3>카테고리</h3>
             <ul class="cat-list">
-                <li th:each="c : ${home.categories}">
-                    <a th:href="@{'/category/' + ${c.id}}">
-                        <span th:text="${c.name}">전체보기</span>
-                        <span class="count" th:text="${c.count}">0</span>
+                <li th:each="c : ${home.category}">
+                    <a th:href="@{'/category/' + ${c}}">
+                        <span th:text="${c}">전체보기</span>
+                        <span class="count" th:text="${c}">0</span>
                     </a>
                 </li>
             </ul>
         </section>
 
-        <section class="activity card">
-            <h3>활동정보</h3>
-            <ul class="activity-list">
-                <li><span>이웃</span><strong th:text="${home.activity.neighbor}">0</strong></li>
-                <li><span>글</span><strong th:text="${home.activity.posts}">0</strong></li>
-                <li><span>스크랩</span><strong th:text="${home.activity.scraps}">0</strong></li>
-            </ul>
-        </section>
     </aside>
 
     <section class="content">
         <article class="card quote">
             <h3>오늘의 한 줄</h3>
-            <p th:text="${home.dailyQuote}">
+            <p th:text="${home.todayComment}">
                 영감 문구가 여기에 표시됩니다.
             </p>
         </article>

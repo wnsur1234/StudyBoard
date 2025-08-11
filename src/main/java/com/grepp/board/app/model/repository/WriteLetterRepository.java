@@ -1,4 +1,7 @@
 package com.grepp.board.app.model.repository;
 
-public class WriteLetterRepository {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface WriteLetterRepository {
 }
