@@ -20,9 +20,10 @@ public class Letter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "home_id" )
-    @NotNull
-    private Long homeId;
+    // 🔁 FK를 Long이 아니라 연관관계로!
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "home_id", nullable = false)
+    private Home home;
 
     private String title;
 

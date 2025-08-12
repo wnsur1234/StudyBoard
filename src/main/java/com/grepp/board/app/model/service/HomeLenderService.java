@@ -1,16 +1,10 @@
 package com.grepp.board.app.model.service;
 
-import com.grepp.board.app.controller.web.payload.RenderResponse;
 import com.grepp.board.app.model.dto.HomeDTO;
 import com.grepp.board.app.model.repository.HomeLenderRepository;
 import com.grepp.board.infra.entity.Home;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor

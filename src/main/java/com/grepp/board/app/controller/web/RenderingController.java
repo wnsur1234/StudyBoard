@@ -1,16 +1,12 @@
 package com.grepp.board.app.controller.web;
 
 import com.grepp.board.app.controller.web.payload.RenderResponse;
-import com.grepp.board.app.model.dto.HomeDTO;
 import com.grepp.board.app.model.service.HomeLenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,6 +31,11 @@ public class RenderingController {
 
 
         model.addAttribute("home", home);
-        return "board/list";
+        return "board/home";
+    }
+
+    @GetMapping("/letter")
+    public String letter(Model model){
+        return "board/writer";
     }
 }
