@@ -37,37 +37,10 @@ src
 │ ├─ templates
 │ └─ application.yml
 
-yaml
-복사
-편집
 
----
-
-## 🚀 실행 방법
-1. 저장소 클론
-   ```bash
-   git clone https://github.com/username/board-project.git
-MySQL에 데이터베이스 생성
-
-sql
-복사
-편집
-CREATE DATABASE board;
-application.yml DB 정보 수정
-
-프로젝트 실행
-
-bash
-복사
-편집
-./gradlew bootRun
 📅 개발 계획
- 게시판 CRUD 구현
+- [] 게시판 CRUD 구현
 
- 로그인/회원가입 기능 추가
+- [] 로그인/회원가입 기능 추가
 
- 댓글 기능 추가
-
-yaml
-복사
-편집
+- [] 댓글 기능 추가
