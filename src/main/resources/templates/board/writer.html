@@ -1,12 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>글쓰기</title>
+    <meta charset="UTF-8"/>
+    <title>새 글 쓰기</title>
+    <link rel="stylesheet" th:href="@{/css/blog.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
-<div>
-    안녕하세요 자유롭게 글로 표현하는 공간입니다.
-</div>
+
+<!-- 상단 GNB (home.html과 동일 구조) -->
+<header class="gnb">
+    <div class="gnb__inner">
+        <div class="logo">블로그</div>
+        <nav class="menu">
+            <a href="/" >블로그 홈</a>
+            <a href="/letter/1" class="active">글쓰기</a>
+            <a href="/about">소개</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- 좌측 사이드 (간단 안내) -->
+    <aside class="sidebar">
+        <section class="card profile">
+            <div class="avatar"></div>
+            <div class="nick" th:text="${home.title}">사용자</div>
+            <div class="today" th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">Today</div>
+        </section>
+
+        <section class="card">
+            <h3>작성 가이드</h3>
+            <p style="margin:0; line-height:1.6;">
+                제목과 본문을 입력하고 <b>발행</b>을 누르시면 내 블로그에 게시됩니다.<br/>
+                필요 시 <b>비공개</b>로 저장하실 수도 있습니다.
+            </p>
+        </section>
+    </aside>
+
+    <!-- 우측 본문: 글쓰기 폼 -->
+    <section class="content">
+        <article class="card">
+            <h3 style="margin:0 0 12px;">새 글 쓰기</h3>
+
+            <form id="writeForm" th:action="@{/letter}" method="post">
+                <!-- Spring Security 사용 시 주석 해제
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                -->
+                <input type="hidden" name="homeId" th:value="${home.id}"/>
+
+                <!-- 제목 -->
+                <div style="margin-bottom:12px;">
+                    <label for="title" style="display:block; margin-bottom:6px; color:#6b7280;">제목</label>
+                    <input id="title" name="title" type="text" placeholder="제목을 입력하세요"
+                           required maxlength="120"
+                           style="width:100%; padding:12px 14px; border:1px solid #eee; border-radius:10px; font-size:18px;">
+                </div>
+
+                <!-- 카테고리 -->
+                <div style="margin-bottom:12px;">
+                    <label for="category" style="display:block; margin-bottom:6px; color:#6b7280;">카테고리</label>
+                    <select id="category" name="category"
+                            style="width:240px; padding:10px 12px; border:1px solid #eee; border-radius:10px;">
+                        <!-- 서버에서 categories(List<String>/Enum) 내려주면 사용 -->
+                        <option value="" disabled selected>선택</option>
+                        <option th:each="c : ${home.category}" th:value="${c}" th:text="${c}">DAILY</option>
+                    </select>
+                </div>
+
+                <!-- 공개 범위 -->
+                <div style="margin-bottom:12px;">
+                    <span style="display:block; margin-bottom:6px; color:#6b7280;">공개 범위</span>
+                    <label style="margin-right:16px;">
+                        <input type="radio" name="visibility" value="PUBLIC" checked> 공개
+                    </label>
+                    <label>
+                        <input type="radio" name="visibility" value="PRIVATE"> 비공개
+                    </label>
+                </div>
+
+                <!-- 본문 -->
+                <div style="margin-bottom:12px;">
+                    <label for="content" style="display:block; margin-bottom:6px; color:#6b7280;">본문</label>
+                    <textarea id="content" name="content" placeholder="내용을 입력하세요" required
+                              style="width:100%; min-height:320px; padding:14px; line-height:1.6; border:1px solid #eee; border-radius:10px; resize:vertical;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; color:#6b7280; font-size:13px;">
+                        <span id="byteCounter">0자</span>
+                        <button type="button" id="btnTemp" style="border:1px solid #eee; background:#fff; padding:6px 10px; border-radius:10px; cursor:pointer;">임시저장</button>
+                    </div>
+                </div>
+
+                <!-- 버튼 -->
+                <div style="display:flex; gap:8px; justify-content:flex-end;">
+                    <button type="button" id="btnCancel"
+                            style="border:1px solid #eee; background:#fff; padding:10px 14px; border-radius:10px; cursor:pointer;">
+                        취소
+                    </button>
+                    <button type="submit"
+                            style="border:1px solid #111; background:#111; color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600;">
+                        발행하기
+                    </button>
+                </div>
+            </form>
+        </article>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer__inner">© 게시판프로젝트(개인)</div>
+</footer>
+
+<!-- 즉각 반응용 최소 스크립트 (클라이언트 인터랙션) -->
+<script>
+    // 글자 수
+    const $content = document.getElementById('content');
+    const $title = document.getElementById('title');
+    const $counter = document.getElementById('byteCounter');
+    $content.addEventListener('input', () => $counter.textContent = $content.value.length + '자');
+
+    // 임시저장 (로컬)
+    const KEY = 'writer_draft';
+    const saveDraft = () => {
+        const data = {
+            title: $title.value,
+            category: document.getElementById('category').value,
+            visibility: (document.querySelector('input[name="visibility"]:checked')||{}).value,
+            content: $content.value,
+            ts: Date.now()
+        };
+        localStorage.setItem(KEY, JSON.stringify(data));
+    };
+    document.getElementById('btnTemp').addEventListener('click', saveDraft);
+
+    // 자동 임시저장 디바운스
+    let t;
+    document.getElementById('writeForm').addEventListener('input', () => { clearTimeout(t); t=setTimeout(saveDraft, 800); });
+
+    // 기존 초안 불러오기
+    const raw = localStorage.getItem(KEY);
+    if (raw) {
+        try {
+            const d = JSON.parse(raw);
+            $title.value = d.title || '';
+            document.getElementById('category').value = d.category || '';
+            if (d.visibility) {
+                const r = document.querySelector('input[name="visibility"][value="'+d.visibility+'"]');
+                r && (r.checked = true);
+            }
+            $content.value = d.content || '';
+            $counter.textContent = $content.value.length + '자';
+        } catch(e){}
+    }
+
+    // 제출 시 임시저장 제거
+    document.getElementById('writeForm').addEventListener('submit', () => localStorage.removeItem(KEY));
+
+    // 취소 → 홈
+    document.getElementById('btnCancel').addEventListener('click', () => window.location.href = '/');
+</script>
 </body>
 </html>

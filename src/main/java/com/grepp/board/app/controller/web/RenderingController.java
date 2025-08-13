@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class RenderingController {
     /**
@@ -22,9 +25,9 @@ public class RenderingController {
 
     // 화면을 나타낼 때 특정 데이터가 필요한것이므로
     // id 값을 받아서 home 엔티티에 id 값을 반환 하도록 변경해야함
-    @GetMapping("/{id}")
+    @GetMapping()
     public String render(
-            @PathVariable("id") Long homeId, Model model)
+            @RequestParam(name="id",required = false) Long homeId, Model model)
     {
 
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
@@ -34,8 +37,12 @@ public class RenderingController {
         return "board/home";
     }
 
-    @GetMapping("/letter")
-    public String letter(Model model){
+    @GetMapping("/letter/{id}")
+    public String letter(@PathVariable("id") Long homeId,Model model){
+        RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
+
+
+        model.addAttribute("home", home);
         return "board/writer";
     }
 }
