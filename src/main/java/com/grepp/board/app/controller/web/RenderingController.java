@@ -29,14 +29,12 @@ public class RenderingController {
     public String render(
             @RequestParam(name="id",required = false) Long homeId, Model model)
     {
-
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
 
 
         model.addAttribute("home", home);
         return "board/home";
     }
-
     @GetMapping("/letter/{id}")
     public String letter(@PathVariable("id") Long homeId,Model model){
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
