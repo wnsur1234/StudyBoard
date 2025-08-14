@@ -37,14 +37,6 @@ public class RenderingController {
         model.addAttribute("home", home);
         return "board/home";
     }
-
-    /**
-     * 자 뭐가 바뀌었다 과연 목록이 뜰까 확인 time
-     * @param homeId
-     * @param model
-     * @return
-     */
-
     @GetMapping("/letter/{id}")
     public String letter(@PathVariable("id") Long homeId,Model model){
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
