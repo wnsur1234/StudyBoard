@@ -6,14 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class RenderingController {
+public class RenderingWebController {
     /**
      * TODO
      * board/new
@@ -33,11 +32,9 @@ public class RenderingController {
         model.addAttribute("home", home);
         return "board/home";
     }
-    @GetMapping("/letter/{id}")
-    public String letter(@PathVariable("id") Long homeId,Model model){
+    @GetMapping("/letter")
+    public String letter(@RequestParam(name="id",required = false) Long homeId,Model model){
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
-
-
         model.addAttribute("home", home);
         return "board/writer";
     }
