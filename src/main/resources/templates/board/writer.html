@@ -14,7 +14,7 @@
         <div class="logo">블로그</div>
         <nav class="menu">
             <a href="/" >블로그 홈</a>
-            <a href="/letter/1" class="active">글쓰기</a>
+            <a href="/letter" class="active">글쓰기</a>
             <a href="/about">소개</a>
         </nav>
     </div>
@@ -66,17 +66,6 @@
                         <option value="" disabled selected>선택</option>
                         <option th:each="c : ${home.category}" th:value="${c}" th:text="${c}">DAILY</option>
                     </select>
-                </div>
-
-                <!-- 공개 범위 -->
-                <div style="margin-bottom:12px;">
-                    <span style="display:block; margin-bottom:6px; color:#6b7280;">공개 범위</span>
-                    <label style="margin-right:16px;">
-                        <input type="radio" name="visibility" value="PUBLIC" checked> 공개
-                    </label>
-                    <label>
-                        <input type="radio" name="visibility" value="PRIVATE"> 비공개
-                    </label>
                 </div>
 
                 <!-- 본문 -->

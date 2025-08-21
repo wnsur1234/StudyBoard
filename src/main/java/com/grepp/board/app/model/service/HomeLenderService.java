@@ -23,7 +23,6 @@ public class HomeLenderService {
         SetConfig sc= new SetConfig();
 
         Home defHomeId = sc.getDefaultId();
-        System.out.println(defHomeId);
 
         if(homeId == null) {
             lender = homeLenderRepository.findById(setConfigService.getHomeId())
