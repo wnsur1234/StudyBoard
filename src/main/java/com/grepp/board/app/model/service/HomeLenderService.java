@@ -41,4 +41,8 @@ public class HomeLenderService {
                 .todayComment(lender.getToday_comment())
                 .build();
     }
+
+    public Home getReferenceById(Long homeId) {
+        return homeLenderRepository.getReferenceById(homeId);
+    }
 }

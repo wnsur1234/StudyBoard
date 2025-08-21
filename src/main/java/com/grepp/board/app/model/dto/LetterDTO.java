@@ -14,5 +14,5 @@ public class LetterDTO {
     private Long id;
     private Long homeId;
     private String LetterTitle;
-    private Text story;
+    private String story;
 }
