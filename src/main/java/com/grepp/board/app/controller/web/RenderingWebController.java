@@ -1,11 +1,14 @@
 package com.grepp.board.app.controller.web;
 
+import com.grepp.board.app.controller.web.payload.LetterRequest;
 import com.grepp.board.app.controller.web.payload.RenderResponse;
 import com.grepp.board.app.model.service.HomeLenderService;
+import com.grepp.board.app.model.service.WriteLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,6 +24,7 @@ public class RenderingWebController {
      * ->
      */
     private final HomeLenderService homeLenderService;
+    private final WriteLetterService writeLetterService;
 
     // 화면을 나타낼 때 특정 데이터가 필요한것이므로
     // id 값을 받아서 home 엔티티에 id 값을 반환 하도록 변경해야함
@@ -39,5 +43,10 @@ public class RenderingWebController {
         model.addAttribute("home", home);
         System.out.println(home);
         return "board/writer";
+    }
+    @PostMapping("/letter")
+    public String sendLetter(LetterRequest letterRequest){
+        writeLetterService.sendLetter(letterRequest);
+        return "redirect:/";
     }
 }
