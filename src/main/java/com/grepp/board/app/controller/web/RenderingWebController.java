@@ -30,12 +30,14 @@ public class RenderingWebController {
     {
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
         model.addAttribute("home", home);
+        System.out.println(home);
         return "board/home";
     }
     @GetMapping("/letter")
     public String letter(@RequestParam(name="id",required = false) Long homeId,Model model){
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
         model.addAttribute("home", home);
+        System.out.println(home);
         return "board/writer";
     }
 }
