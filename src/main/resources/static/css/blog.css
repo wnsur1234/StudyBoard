@@ -19,10 +19,21 @@ body {
     padding: 12px 16px;
 }
 .gnb .logo { font-weight:700; }
-.gnb .menu a {
-    color:#c9c9c9; text-decoration:none; margin-left:16px;
-}
+/* GNB 안의 링크/버튼 색상 통일 */
+.gnb .menu a { color:#c9c9c9; text-decoration:none; margin-left:16px; }
 .gnb .menu a.active, .gnb .menu a:hover { color:#fff; }
+
+/* ✅ 로그아웃 버튼을 링크처럼 보이게 */
+.gnb .menu .link-btn {
+    color:#c9c9c9;
+    background:transparent;
+    border:0;
+    padding:0;
+    margin-left:16px;
+    cursor:pointer;
+    font: inherit;           /* 폰트/사이즈 주변과 동일하게 */
+}
+.gnb .menu .link-btn:hover { color:#fff; text-decoration:underline; }
 
 /* ===== 페이지 컨테이너 (사이드바 + 본문) ===== */
 .container {
