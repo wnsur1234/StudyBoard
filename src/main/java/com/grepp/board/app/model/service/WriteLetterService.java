@@ -1,6 +1,7 @@
 package com.grepp.board.app.model.service;
 
 import com.grepp.board.app.controller.web.payload.LetterRequest;
+import com.grepp.board.app.controller.web.payload.LetterResponse;
 import com.grepp.board.app.model.repository.WriteLetterRepository;
 import com.grepp.board.infra.entity.Home;
 import com.grepp.board.infra.entity.Letter;
@@ -27,4 +28,5 @@ public class WriteLetterService {
         letter.setCreatedAt(LocalDateTime.now());
         writeLetterRepository.save(letter);
     }
+
 }
