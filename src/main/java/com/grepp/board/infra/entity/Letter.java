@@ -1,5 +1,6 @@
 package com.grepp.board.infra.entity;
 
+import com.grepp.board.infra.emuns.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,7 +28,9 @@ public class Letter {
 
     private String title;
 
-    private Text story;
+    private String story;
+
+    private Category category;
 
     @NotNull
     @Column(name = "created_at")
