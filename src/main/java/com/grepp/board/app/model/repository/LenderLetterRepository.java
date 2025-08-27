@@ -5,7 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WriteLetterRepository extends JpaRepository<Letter, Long> {
-
-
+public interface LenderLetterRepository extends JpaRepository<Letter, Long> {
 }

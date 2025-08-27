@@ -23,7 +23,6 @@ public class HomeLenderService {
         SetConfig sc= new SetConfig();
 
         Home defHomeId = sc.getDefaultId();
-        System.out.println(defHomeId);
 
         if(homeId == null) {
             lender = homeLenderRepository.findById(setConfigService.getHomeId())
@@ -41,5 +40,9 @@ public class HomeLenderService {
                 .category(lender.getCategory())
                 .todayComment(lender.getToday_comment())
                 .build();
+    }
+
+    public Home getReferenceById(Long homeId) {
+        return homeLenderRepository.getReferenceById(homeId);
     }
 }

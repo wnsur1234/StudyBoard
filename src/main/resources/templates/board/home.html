@@ -13,8 +13,7 @@
         <div class="logo">블로그</div>
         <nav class="menu">
             <a href="/">블로그 홈</a>
-            <a href="/letter/1">글쓰기</a>
-            <a href="/about">소개</a>
+            <a href="/letter">글쓰기</a>
         </nav>
     </div>
 </header>
@@ -24,6 +23,10 @@
         <section class="profile card">
             <div class="avatar"></div>
             <div class="nick" th:text="${home.title}">사용자</div>
+            <div>
+                <h3>소개글</h3>
+                <span class="introduce" th:text="${home.introduce_story}"></span>
+            </div>
             <div class="today" th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">Today · 2025-08-09</div>
         </section>
 
@@ -51,9 +54,13 @@
 
         <!-- 최근 글 목록 자리 -->
         <section class="card posts">
-            <h3>최근 글</h3>
-            <div class="empty">아직 작성된 글이 없습니다.</div>
-            <!-- 나중에 th:each 로 리스트 바인딩 -->
+            <h3>작성한 글</h3>
+            <ul class="posts-list">
+                <li th:each="post : ${letters}">
+                    <div th:text="${post.title}"></div>
+                    <div th:text="${post.story}"></div>
+                </li>
+            </ul>
         </section>
     </section>
 </main>
