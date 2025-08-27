@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8"/>
     <title>새 글 쓰기</title>
@@ -12,9 +12,13 @@
     <div class="gnb__inner">
         <div class="logo">블로그</div>
         <nav class="menu">
-            <a href="/">블로그 홈</a>
-            <a href="/letter" class="active">글쓰기</a>
-            <a href="/about">소개</a>
+            <span sec:authorize="isAuthenticated()">안녕하세요,
+                <b sec:authentication="name">사용자</b>님!
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="link-btn">로그아웃</button>
+                </form>
+            </span>
         </nav>
     </div>
 </header>

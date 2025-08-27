@@ -56,4 +56,8 @@ public class RenderingWebController {
         writeLetterService.sendLetter(letterRequest);
         return "redirect:/";
     }
+    @GetMapping("/login")
+    public String login(){
+        return "security/login";
+    }
 }
