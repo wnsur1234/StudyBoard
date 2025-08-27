@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
 <head>
     <meta charset="UTF-8"/>
     <title th:text="${home.title}">블로그</title>
@@ -12,8 +13,16 @@
     <div class="gnb__inner">
         <div class="logo">블로그</div>
         <nav class="menu">
-            <a href="/">블로그 홈</a>
-            <a href="/letter">글쓰기</a>
+            <span sec:authorize="isAuthenticated()">안녕하세요,
+                <b sec:authentication="name">사용자</b>님!
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit"  class="link-btn">로그아웃</button>
+                </form>
+            </span>
+            <span sec:authorize="isAnonymous()">
+                <a href="/login">로그인</a>
+            </span>
         </nav>
     </div>
 </header>
@@ -27,7 +36,9 @@
                 <h3>소개글</h3>
                 <span class="introduce" th:text="${home.introduce_story}"></span>
             </div>
-            <div class="today" th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">Today · 2025-08-09</div>
+            <div class="today" th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">Today ·
+                2025-08-09
+            </div>
         </section>
 
         <section class="category card">
