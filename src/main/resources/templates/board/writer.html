@@ -68,6 +68,17 @@
                 </div>
             </div>
 
+            <!-- qr 입력 받기 -->
+            <div class="form-row">
+                <label for="qrUrl" class="label">QR URL (선택)</label>
+                <input id="qrUrl" name="qrUrl" type="url" placeholder="https://example.com">
+            </div>
+            <div class="form-row">
+                <label for="qrName" class="label">QR 이름 (선택)</label>
+                <input id="qrName" name="qrName" type="text" placeholder="내 QR 코드 이름">
+                <input type="hidden" name="size" value="240">
+            </div>
+
             <!-- 버튼 -->
             <div class="form-actions">
                 <button type="button" id="btnCancel" class="btn">취소</button>
