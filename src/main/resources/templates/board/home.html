@@ -76,6 +76,18 @@
                 <li th:each="post : ${letters}">
                     <div th:text="${post.title}"></div>
                     <div th:text="${post.story}"></div>
+
+                    <!-- QR 출력 -->
+                    <div th:if="${post.qrBase64}">
+                        <h5 th:text="${post.qrName}"></h5>
+                        <img th:src="'data:image/png;base64,' + ${post.qrBase64}" alt="QR"/>
+                    </div>
+                    <form method="post" action="/download">
+                        <input type="hidden" name="base64" th:value="${post.qrBase64}">
+                        <input type="hidden" name="name"  th:value="${post.qrName != null ? post.qrName : 'my-qr'}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit">PNG 다운로드</button>
+                    </form>
                 </li>
             </ul>
         </section>

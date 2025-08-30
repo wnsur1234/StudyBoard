@@ -7,6 +7,7 @@ import com.grepp.board.infra.entity.Letter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,10 +18,14 @@ public class LenderLetterService {
 
     public List<LetterDTO> getAllLetter() {
         List<Letter> letter = lenderLetterRepository.findAll();
+
         return letter.stream().map(e -> LetterDTO.builder()
                 .id(e.getId())
                 .LetterTitle(e.getTitle())
                 .story(e.getStory())
+                .qrName(e.getQrName())
+                .qrUrl(e.getQrUrl())
+                .size(e.getSize())
                 .build()).toList();
     }
 }

@@ -18,12 +18,19 @@ public class LetterResponse {
     private Long letterId;
     private String title;
     private String story;
+    private String qrUrl;
+    private String qrName;
+    private Integer size;
+    private String qrBase64;
 
     public static LetterResponse fromDTO(LetterDTO letter) {
         return LetterResponse.builder()
                 .letterId(letter.getId())
                 .story(letter.getStory())
                 .title(letter.getLetterTitle())
+                .qrUrl(letter.getQrUrl())
+                .qrName(letter.getQrName())
+                .size(letter.getSize())
                 .build();
     }
     public static List<LetterResponse> fromDTOs(List<LetterDTO> letters) {

@@ -15,4 +15,8 @@ public class LetterDTO {
     private Long homeId;
     private String LetterTitle;
     private String story;
+    //qr
+    private String qrName;
+    private String qrUrl;
+    private Integer size;
 }
