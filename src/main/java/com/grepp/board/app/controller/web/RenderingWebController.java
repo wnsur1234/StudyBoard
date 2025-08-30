@@ -11,11 +11,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -50,10 +55,18 @@ public class RenderingWebController {
     {
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
         List<LetterResponse> letters = LetterResponse.fromDTOs(lenderLetterService.getAllLetter());
-        String base64 = qrService.toBase64Png(qrUrl,qrSize);
+        String fixedBase64 = qrService.toBase64Png(qrUrl,qrSize);
+
+        for(LetterResponse i : letters){
+            if(i.getQrUrl() != null && !i.getQrUrl().isBlank()){
+                int size = (i.getSize() != null) ? i.getSize() : qrSize;
+                i.setQrBase64(qrService.toBase64Png(i.getQrUrl(),size));
+            }
+        }
+
         model.addAttribute("home", home);
         model.addAttribute("letters", letters);
-        model.addAttribute("qrBase64", base64);
+        model.addAttribute("qrBase64", fixedBase64);
         model.addAttribute("qrUrl", qrUrl);
         return "board/home";
     }
@@ -94,5 +107,18 @@ public class RenderingWebController {
         }
         return "redirect:/login?signup";
     }
+    @PostMapping("/download")
+    public ResponseEntity<byte[]> download(@RequestParam String base64,
+                                           @RequestParam String name) {
+        byte[] bytes = java.util.Base64.getDecoder().decode(base64);
 
+        ContentDisposition cd = ContentDisposition.attachment()
+                .filename(name + ".png", StandardCharsets.UTF_8) // ★ 핵심
+                .build();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, cd.toString())
+                .contentType(MediaType.IMAGE_PNG)
+                .body(bytes);
+    }
 }

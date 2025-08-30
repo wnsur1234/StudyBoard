@@ -25,7 +25,12 @@ public class WriteLetterService {
         letter.setTitle(letterRequest.getTitle());
         letter.setStory(letterRequest.getStory());
         letter.setCategory(letterRequest.getCategory());
-        letter.setCreatedAt(LocalDateTime.now());
+
+        // 여기에도 추가
+        letter.setQrUrl(letterRequest.getQrUrl());
+        letter.setQrName(letterRequest.getQrName());
+        letter.setSize(letterRequest.getSize());
+
         writeLetterRepository.save(letter);
     }
 
