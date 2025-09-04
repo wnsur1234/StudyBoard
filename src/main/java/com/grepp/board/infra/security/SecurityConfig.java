@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 정적 리소스, 홈 등은 허용
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**").permitAll()
-                        .requestMatchers("/login", "/logout","/signup").permitAll() // ✅ 로그인/로그아웃 화면 허용 이거까지 해줘야 하는구나~
+                        .requestMatchers("/login", "/logout","/signup","/map").permitAll() // ✅ 로그인/로그아웃 화면 허용 이거까지 해줘야 하는구나~
                         // 글쓰기 보호 (원하시는 URL로 조정)
                         .requestMatchers("/letter").authenticated()
                         .anyRequest().permitAll()

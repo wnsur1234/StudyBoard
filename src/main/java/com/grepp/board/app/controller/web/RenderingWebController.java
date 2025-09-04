@@ -46,6 +46,12 @@ public class RenderingWebController {
     private final UsersService usersService;
     private final QrService qrService;
 
+    // 카카오 지도
+    @GetMapping("/map")
+    public String map() {
+        return "board/kokoMap";
+    }
+
     // 화면을 나타낼 때 특정 데이터가 필요한것이므로
     // id 값을 받아서 home 엔티티에 id 값을 반환 하도록 변경해야함
     @GetMapping()
