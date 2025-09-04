@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8"/>
     <title th:text="${home.title}">블로그</title>
@@ -19,7 +19,7 @@
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <a href="/">블로그 홈</a>
                     <a href="/letter">글쓰기</a>
-                    <button type="submit"  class="link-btn">로그아웃</button>
+                    <button type="submit" class="link-btn">로그아웃</button>
                 </form>
             </span>
             <span sec:authorize="isAnonymous()">
@@ -56,6 +56,11 @@
             </ul>
         </section>
 
+        <section class="kako card" style="margin-top:16px;">
+            <h3>내 주변 지도</h3>
+            <!-- kokoMap.html의 kakaoMap 조각을 끼워 넣음 -->
+            <div th:replace="board/kokoMap :: kakaoMap('강남대로 128','450px')"></div>
+        </section>
     </aside>
 
     <section class="content">
@@ -84,7 +89,7 @@
                     </div>
                     <form method="post" action="/download">
                         <input type="hidden" name="base64" th:value="${post.qrBase64}">
-                        <input type="hidden" name="name"  th:value="${post.qrName != null ? post.qrName : 'my-qr'}">
+                        <input type="hidden" name="name" th:value="${post.qrName != null ? post.qrName : 'my-qr'}">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <button type="submit">PNG 다운로드</button>
                     </form>
@@ -94,7 +99,7 @@
     </section>
     <div class="qr-wrap">
         <a th:href="${qrUrl}" target="_blank" rel="noopener">
-            <img th:src="'data:image/png;base64,' + ${qrBase64}" alt="QR to YouTube" />
+            <img th:src="'data:image/png;base64,' + ${qrBase64}" alt="QR to YouTube"/>
         </a>
         <div class="hint">QR를 스캔하거나 이미지를 클릭하면 이동합니다.</div>
     </div>
