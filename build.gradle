@@ -48,8 +48,13 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.zxing/core
     implementation("com.google.zxing:core:3.3.3")
     implementation 'com.google.zxing:javase:3.5.3'
+
+    // gemini 추가
+    // https://mvnrepository.com/artifact/com.google.genai/google-genai
+    implementation("com.google.genai:google-genai:1.10.0")
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
