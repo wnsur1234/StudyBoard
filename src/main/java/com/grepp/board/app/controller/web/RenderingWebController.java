@@ -7,6 +7,7 @@ import com.grepp.board.app.model.service.LenderLetterService;
 import com.grepp.board.app.model.service.UsersService;
 import com.grepp.board.app.model.service.WriteLetterService;
 import com.grepp.board.infra.error.DuplicateEmailException;
+import com.grepp.board.infra.gemini.GeminiService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,9 +41,6 @@ public class RenderingWebController {
     @Value("${qrcode.size}")
     private int qrSize;
 
-    @Value("${gemini-key}")
-    private String geminiKey;
-
     @Value("${kakao-key}")
     private String kakaoKey;
 
@@ -51,6 +49,7 @@ public class RenderingWebController {
     private final LenderLetterService lenderLetterService;
     private final UsersService usersService;
     private final QrService qrService;
+    private final GeminiService geminiService;
 
     // 카카오 지도
     @GetMapping("/map")
@@ -63,6 +62,7 @@ public class RenderingWebController {
     @GetMapping()
     public String render(
             @RequestParam(name="id",required = false) Long homeId,
+            @RequestParam(name="prompt",required = false) String prompt,
             Model model)
     {
         RenderResponse home = RenderResponse.fromDTO(homeLenderService.getHomeById(homeId));
@@ -76,6 +76,13 @@ public class RenderingWebController {
             }
         }
 
+        if(prompt == null || prompt.isBlank()){
+            model.addAttribute("prompt","무엇이든 물어보세요!");
+        }else{
+            String answer = geminiService.generateText(prompt);
+            model.addAttribute("prompt",prompt);
+            model.addAttribute("answer",answer);
+        }
         model.addAttribute("home", home);
         model.addAttribute("letters", letters);
         model.addAttribute("qrBase64", fixedBase64);
