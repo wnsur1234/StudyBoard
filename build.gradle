@@ -52,6 +52,10 @@ dependencies {
     // gemini 추가
     // https://mvnrepository.com/artifact/com.google.genai/google-genai
     implementation("com.google.genai:google-genai:1.10.0")
+
+    // env 파일 인식용
+    implementation 'io.github.cdimascio:dotenv-java:2.2.4'
+
 }
 
 tasks.named('test') {
