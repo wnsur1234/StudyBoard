@@ -43,6 +43,9 @@ public class RenderingWebController {
     @Value("${gemini-key}")
     private String geminiKey;
 
+    @Value("${kakao-key}")
+    private String kakaoKey;
+
     private final HomeLenderService homeLenderService;
     private final WriteLetterService writeLetterService;
     private final LenderLetterService lenderLetterService;
@@ -77,7 +80,7 @@ public class RenderingWebController {
         model.addAttribute("letters", letters);
         model.addAttribute("qrBase64", fixedBase64);
         model.addAttribute("qrUrl", qrUrl);
-        model.addAttribute("geminiKey", geminiKey);
+        model.addAttribute("kakaoKey", kakaoKey);
         return "board/home";
     }
     @GetMapping("/letter")
