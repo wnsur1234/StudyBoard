@@ -40,6 +40,9 @@ public class RenderingWebController {
     @Value("${qrcode.size}")
     private int qrSize;
 
+    @Value("${gemini-key}")
+    private String geminiKey;
+
     private final HomeLenderService homeLenderService;
     private final WriteLetterService writeLetterService;
     private final LenderLetterService lenderLetterService;
@@ -74,6 +77,7 @@ public class RenderingWebController {
         model.addAttribute("letters", letters);
         model.addAttribute("qrBase64", fixedBase64);
         model.addAttribute("qrUrl", qrUrl);
+        model.addAttribute("geminiKey", geminiKey);
         return "board/home";
     }
     @GetMapping("/letter")
