@@ -63,6 +63,46 @@
         </section>
     </aside>
 
+    <!-- AI Q&A: 무엇이든 물어보세요 -->
+    <section class="card" style="margin-bottom: 16px;">
+        <h3>무엇이든 물어보세요</h3>
+
+        <!-- 같은 화면으로 GET 전송 → @RequestParam("prompt")로 매핑 -->
+        <form th:action="@{/}" method="get" style="display:flex; gap:8px; align-items:center;">
+            <!-- 홈 id 유지용 (홈이 id로 렌더링될 때) -->
+            <input type="hidden" name="id" th:value="${home != null} ? ${home.id} : ${param.id}" />
+
+            <input type="text"
+                   name="prompt"
+                   placeholder="질문을 입력하세요"
+                   style="flex:1;"
+                   th:value="${param.prompt}" />
+
+            <button type="submit">질문하기</button>
+        </form>
+
+        <!-- 안내/질문/답변 표시부 -->
+        <div style="margin-top:12px;">
+            <!-- 안내문: prompt가 비어 있을 때 -->
+            <p th:if="${#strings.isEmpty(answer) and (prompt == '무엇이든 물어보세요 👇' or #strings.isEmpty(param.prompt))}"
+               style="color:#666;">간단한 질문을 입력해 보세요. 예) “오늘 할 일 3개로 요약해줘”</p>
+
+            <!-- 사용자가 입력한 질문 -->
+            <div th:if="${!#strings.isEmpty(param.prompt)}" style="margin-top:6px;">
+                <div style="font-weight:600;">질문</div>
+                <p th:text="${prompt}">-</p>
+            </div>
+
+            <!-- Gemini 응답 -->
+            <div th:if="${!#strings.isEmpty(answer)}" style="margin-top:8px;">
+                <div style="font-weight:600;">답변</div>
+                <!-- 개행/긴 문장 가독성 위해 pre + pre-wrap -->
+                <pre th:text="${answer}" style="white-space:pre-wrap; word-break:break-word;"></pre>
+            </div>
+        </div>
+    </section>
+
+
     <section class="content">
         <article class="card quote">
             <h3>오늘의 한 줄</h3>
