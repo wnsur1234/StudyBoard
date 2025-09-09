@@ -39,5 +39,10 @@ out/
 # .gitignore 파일에 추가
 application.properties
 
-# env 무시 추가
+# env files
 .env
+.env.*
+*.env
+**/.env
+**/*.env
+
